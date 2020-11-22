@@ -12,6 +12,7 @@ AppAsset::register($this);
 <!DOCTYPE html>
 <html lang="<?php echo Yii::$app->language ?>">
 <head>
+    <base href="/">
     <title><?php echo Html::encode($this->title) ?></title>
     <?php $this->registerCsrfMetaTags() ?>
     <meta charset="<?php echo Yii::$app->charset ?>">
@@ -66,8 +67,9 @@ AppAsset::register($this);
 <div class="logo_products">
     <div class="container">
         <div class="w3ls_logo_products_left">
-<!--            <h1><a href="--><?php //echo Yii::$app->homeUrl?><!--"><span>Grocery</span> Store</a></h1>-->
-            <h1><a href="<?php echo Url::home();?>"><span>Grocery</span> Store</a></h1>
+            <!--            <h1><a href="-->
+            <?php //echo Yii::$app->homeUrl?><!--"><span>Grocery</span> Store</a></h1>-->
+            <h1><a href="<?php echo Url::home(); ?>"><span>Grocery</span> Store</a></h1>
         </div>
         <div class="w3ls_logo_products_left1">
             <ul class="special_items">
@@ -88,8 +90,6 @@ AppAsset::register($this);
     </div>
 </div>
 <!-- //header -->
-<div class="banner">
-    <?php echo $this->render('//layouts/inc/sidebar') ?>
     <?php echo $content; ?>
     <!-- newsletter -->
     <div class="newsletter">

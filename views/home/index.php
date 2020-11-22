@@ -1,8 +1,11 @@
 <?php
+
 use yii\helpers\{Html, Url};
+
 ?>
 <!-- banner -->
 <div class="banner">
+    <?php echo $this->render('//layouts/inc/sidebar') ?>
 
     <div class="w3l_banner_nav_right">
         <section class="slider">
