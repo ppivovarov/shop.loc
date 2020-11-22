@@ -1,7 +1,8 @@
 <?php
+/** @var Category $category */
 
-use yii\helpers\Html;
-use yii\helpers\Url;
+use app\models\Category;
+use yii\helpers\{Html, Url};
 
 ?>
 <!-- products-breadcrumb -->
@@ -10,10 +11,10 @@ use yii\helpers\Url;
         <ul>
             <li>
                 <i class="fa fa-home" aria-hidden="true"></i>
-                <a href="index.html">Home</a>
+                <a href="<?php echo Url::home()?>">Home</a>
                 <span>|</span>
             </li>
-            <li>Branded Foods</li>
+            <li><?php echo $category->title; ?></li>
         </ul>
     </div>
 </div>
