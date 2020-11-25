@@ -1,8 +1,12 @@
 <?php
 /** @var Category $category */
 
+/** @var Pagination $pages */
+
 use app\models\Category;
 use yii\helpers\{Html, Url};
+use yii\data\Pagination;
+use yii\widgets\LinkPager;
 
 ?>
 <!-- products-breadcrumb -->
@@ -11,7 +15,7 @@ use yii\helpers\{Html, Url};
         <ul>
             <li>
                 <i class="fa fa-home" aria-hidden="true"></i>
-                <a href="<?php echo Url::home()?>">Home</a>
+                <a href="<?php echo Url::home() ?>">Home</a>
                 <span>|</span>
             </li>
             <li><?php echo $category->title; ?></li>
@@ -133,6 +137,13 @@ use yii\helpers\{Html, Url};
                         </div>
                     <?php endforeach; ?>
                     <div class="clearfix"></div>
+                    <?php echo LinkPager::widget([
+                        'pagination' => $pages,
+                        'nextPageCssClass' => 'next test',
+                        'nextPageLabel' => 'next',
+                        'prevPageLabel' => 'prev',
+//                        'maxButtonCount' => 4
+                    ]) ?>
                 </div>
             <?php else: ?>
                 <div class="w31s_w31_banner_nav_right_grid1">
