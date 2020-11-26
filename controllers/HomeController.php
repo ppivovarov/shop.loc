@@ -12,7 +12,7 @@ class HomeController extends AppController
 
     public function actionIndex()
     {
-        $offers = Product::find()->where(['is_offer' => 1])->limit(4)->all();
+        $offers = Product::find()->where(['is_offer' => 1])->limit(4)->orderBy('id')->all();
         return $this->render('index', compact('offers'));
     }
 }
