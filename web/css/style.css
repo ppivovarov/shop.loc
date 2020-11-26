@@ -2833,6 +2833,15 @@ input.checkbox:checked:after {
     border-color: #FA1818;
 }
 
+img {
+	max-width: 100%;
+	height: auto;
+}
+
+.snipcart-thumb img {
+	max-height: 140px;
+}
+
 .pagination > li > a, .pagination > li > span {
 	color: #FA1818;
 }
