@@ -35,13 +35,27 @@ AppAsset::register($this);
         </form>
     </div>
     <div class="product_list_header">
-        <form action="#" method="post" class="last">
-            <fieldset>
-                <input type="hidden" name="cmd" value="_cart"/>
-                <input type="hidden" name="display" value="1"/>
-                <input type="submit" name="submit" value="View your cart" class="button"/>
-            </fieldset>
-        </form>
+        <button type="button" class="button" data-toggle="modal" data-target="#modal-cart">
+            $0
+        </button>
+        <div class="modal fade" id="modal-cart" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Корзина</h4>
+                    </div>
+                    <div class="modal-body">
+                        ...
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Продолжить покупки</button>
+                        <a href="<?php Url::to(['cart/view'])?>" class="btn btn-success">Офоримть заказ</a>
+                        <button type="button" class="btn btn-primary">Очистить корзину</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="w3l_header_right">
         <ul>

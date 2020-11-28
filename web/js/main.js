@@ -1,32 +1,32 @@
-jQuery(document).ready(function($) {
+jQuery(document).ready(function ($) {
 
-    $(".scroll").click(function(event){
+    $(".scroll").click(function (event) {
         event.preventDefault();
-        $('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
+        $('html,body').animate({scrollTop: $(this.hash).offset().top}, 1000);
     });
 
-    var navoffeset=$(".agileits_header").offset().top;
-    $(window).scroll(function(){
-        var scrollpos=$(window).scrollTop();
-        if(scrollpos >=navoffeset){
+    var navoffeset = $(".agileits_header").offset().top;
+    $(window).scroll(function () {
+        var scrollpos = $(window).scrollTop();
+        if (scrollpos >= navoffeset) {
             $(".agileits_header").addClass("fixed");
-        }else{
+        } else {
             $(".agileits_header").removeClass("fixed");
         }
     });
 
     $(".dropdown").hover(
-        function() {
-            $('.dropdown-menu', this).stop( true, true ).slideDown("fast");
+        function () {
+            $('.dropdown-menu', this).stop(true, true).slideDown("fast");
             $(this).toggleClass('open');
         },
-        function() {
-            $('.dropdown-menu', this).stop( true, true ).slideUp("fast");
+        function () {
+            $('.dropdown-menu', this).stop(true, true).slideUp("fast");
             $(this).toggleClass('open');
         }
     );
 
-    $().UItoTop({ easingType: 'easeOutQuart' });
+    $().UItoTop({easingType: 'easeOutQuart'});
 
     $('#example').okzoom({
         width: 150,
@@ -38,10 +38,10 @@ jQuery(document).ready(function($) {
 });
 
 
-$(window).load(function(){
+$(window).load(function () {
     $('.flexslider').flexslider({
         animation: "slide",
-        start: function(slider){
+        start: function (slider) {
             $('body').removeClass('loading');
         }
     });
@@ -65,4 +65,17 @@ paypal.minicart.cart.on('checkout', function (evt) {
         alert('The minimum order quantity is 3. Please add more to your shopping cart before checking out');
         evt.preventDefault();
     }
+});
+
+/* Cart */
+$('.add-to-cart').on('click', function () {
+    let id = $(this).data('id');
+    $.ajax({
+        url: 'cart/add',
+        data: {'id': id},
+        type: 'GET',
+        success: res => console.log(res),
+        error: () => alert('Error add to cart!')
+    });
+    return false;
 });

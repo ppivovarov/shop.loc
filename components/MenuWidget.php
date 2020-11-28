@@ -3,8 +3,9 @@ namespace app\components;
 
 use app\models\Category;
 use Yii;
+use yii\base\Widget;
 
-class MenuWidget extends \yii\base\Widget
+class MenuWidget extends Widget
 {
     public $tpl;
     public $ul_class;

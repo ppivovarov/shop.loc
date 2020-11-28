@@ -1,5 +1,6 @@
 <?php
 
+use app\components\AddToCartButtonWidget;
 use app\models\Product;
 use yii\helpers\{Html, Url};
 
@@ -10,23 +11,24 @@ use yii\helpers\{Html, Url};
         <ul>
             <li>
                 <i class="fa fa-home" aria-hidden="true"></i>
-                <a href="<?php echo Url::home()?>">Home</a>
+                <a href="<?php echo Url::home() ?>">Home</a>
                 <span>|</span>
             </li>
-<!--            <li>-->
-<!--                <a href="--><?php //echo Url::to(['category/view', 'id' => $product->category->id])?><!--">-->
-<!--                    --><?php //echo $product->category->title ?>
-<!--                </a>-->
-<!--                <span>|</span>-->
-<!--            </li>-->
+            <!--            <li>-->
+            <!--                <a href="-->
+            <?php //echo Url::to(['category/view', 'id' => $product->category->id])?><!--">-->
+            <!--                    --><?php //echo $product->category->title ?>
+            <!--                </a>-->
+            <!--                <span>|</span>-->
+            <!--            </li>-->
             <li>
                 <?php echo Html::a(
                     $product->category->title,
                     ['category/view', 'id' => $product->category->id]
-                )?>
+                ) ?>
                 <span>|</span>
             </li>
-            <li><?php echo $product->title?></li>
+            <li><?php echo $product->title ?></li>
         </ul>
     </div>
 </div>
@@ -41,7 +43,7 @@ use yii\helpers\{Html, Url};
             <div class="col-md-4 agileinfo_single_left">
                 <?php echo Html::img(
                     '@web/products/' . $product->img,
-                    ['title' => $product->title, 'id' => 'example' ]
+                    ['title' => $product->title, 'id' => 'example']
                 ) ?>
             </div>
             <div class="col-md-8 agileinfo_single_right">
@@ -72,20 +74,7 @@ use yii\helpers\{Html, Url};
                         </h4>
                     </div>
                     <div class="snipcart-details agileinfo_single_right_details">
-                        <form action="#" method="post">
-                            <fieldset>
-                                <input type="hidden" name="cmd" value="_cart"/>
-                                <input type="hidden" name="add" value="1"/>
-                                <input type="hidden" name="business" value=" "/>
-                                <input type="hidden" name="item_name" value="pulao basmati rice"/>
-                                <input type="hidden" name="amount" value="21.00"/>
-                                <input type="hidden" name="discount_amount" value="1.00"/>
-                                <input type="hidden" name="currency_code" value="USD"/>
-                                <input type="hidden" name="return" value=" "/>
-                                <input type="hidden" name="cancel_return" value=" "/>
-                                <input type="submit" name="submit" value="Add to cart" class="button"/>
-                            </fieldset>
-                        </form>
+                        <?php echo AddToCartButtonWidget::widget(['id' => $product->id]) ?>
                     </div>
                 </div>
             </div>
