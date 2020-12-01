@@ -40,7 +40,10 @@ class CartController extends AppController
         $session->open();
         $cart = new Cart();
         $cart->recalc((int)$id);
-        return $this->renderPartial('cart-modal', compact('session'));
+        if (Yii::$app->request->isAjax) {
+            return $this->renderPartial('cart-modal', compact('session'));
+        }
+        return $this->redirect(Yii::$app->request->referrer);
     }
 
     public function actionClear()
@@ -51,5 +54,13 @@ class CartController extends AppController
         $session->remove('cart.qty');
         $session->remove('cart.sum');
         return $this->renderPartial('cart-modal', compact('session'));
+    }
+
+    public function actionCheckout(): string
+    {
+        $session = Yii::$app->session;
+        $session->open();
+        $this->setMeta('Оформление заказа :: ' . Yii::$app->name);
+        return $this->render('checkout', compact('session'));
     }
 }

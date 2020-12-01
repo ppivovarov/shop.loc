@@ -51,7 +51,7 @@ AppAsset::register($this);
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Продолжить покупки</button>
-                        <a href="<?php echo Url::to(['cart/view']) ?>" class="btn btn-success">Офоримть заказ</a>
+                        <a href="<?php echo Url::to(['cart/checkout']) ?>" class="btn btn-success">Офоримть заказ</a>
                         <button type="button" onclick="clearCart()" class="btn btn-primary">Очистить корзину</button>
                     </div>
                 </div>
