@@ -11,10 +11,10 @@ class ProductController extends AppController
      * @return string
      * @throws NotFoundHttpException
      */
-    public function actionView($id)
+    public function actionView($id): string
     {
         $product = Product::findOne($id);
-        if (empty($product)) {
+        if ($product === null) {
             throw new NotFoundHttpException('Такого продукта нет...');
         }
 

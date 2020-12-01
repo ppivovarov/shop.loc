@@ -68,14 +68,93 @@ paypal.minicart.cart.on('checkout', function (evt) {
 });
 
 /* Cart */
+/**
+ * Show modal window of the cart
+ * @param cart
+ */
+function showCart(cart) {
+    $('#modal-cart .modal-body').html(cart);
+    $('#modal-cart').modal();
+    let cartSum = $('#cart-sum').text() ? $('#cart-sum').text() : '$0';
+    if (cartSum) {
+        $('.cart-sum').text(cartSum);
+    }
+}
+
+/**
+ * Handler click on button to show the cart
+ */
+function getCart() {
+    $.ajax({
+        url: 'cart/show',
+        type: 'GET',
+        success: res => {
+            if (!res) {
+                alert('Ошибка добавления в корзину товара');
+            } else {
+                showCart(res);
+            }
+        },
+        error: () => alert('Error add to cart!')
+    });
+}
+
+/**
+ * Handler for button to delete the product from the cart
+ */
+$('#modal-cart .modal-body').on('click', '.del-item', function () {
+    let id = $(this).data('id');
+    $.ajax({
+        url: 'cart/del-item',
+        data: {'id': id},
+        type: 'GET',
+        success: res => {
+            if (!res) {
+                alert('Ошибка удаления из корзину товара');
+            } else {
+                showCart(res);
+            }
+        },
+        error: () => alert('Error del from cart!')
+    });
+});
+
+/**
+ * Handler for button to add the product to the cart
+ */
 $('.add-to-cart').on('click', function () {
     let id = $(this).data('id');
     $.ajax({
         url: 'cart/add',
         data: {'id': id},
         type: 'GET',
-        success: res => console.log(res),
+        success: res => {
+            if (!res) {
+                alert('Ошибка добавления в корзину товара');
+            }
+            showCart(res);
+
+        },
         error: () => alert('Error add to cart!')
     });
     return false;
-});
+})
+
+/**
+ * Clear the product's cart
+ */
+function clearCart() {
+    $.ajax({
+        url: 'cart/clear',
+        type: 'GET',
+        success: res => {
+            if (!res) {
+                alert('Ошибка очистки корзины');
+            }
+            showCart(res);
+        },
+        error: () => alert('Error clear cart!')
+    });
+}
+
+/* Cart */

@@ -72,6 +72,24 @@ i.badge.badge-notify.my-cart-badge {
 	top: 1em;
 }
 
+.product_list_header span.del-item {
+	color: #FA1818;
+	top: 0;
+}
+
+#modal-cart img {
+	max-height: 40px;
+}
+
+.product_list_header .button span.cart-sum {
+	color: #fff;
+}
+
+#modal-cart span.glyphicon.glyphicon-remove {
+	top: 0;
+	cursor: pointer;
+}
+
 .snipcart-details a.button {
 	font-size: 14px;
 	color: #fff;
