@@ -3,8 +3,9 @@ declare(strict_types=1);
 
 namespace app\controllers;
 
-use app\models\{Cart, Product};
+use app\models\{Cart, Order, OrderProduct, Product};
 use Yii;
+use yii\base\ErrorException;
 use yii\web\Response;
 
 class CartController extends AppController
@@ -81,14 +82,53 @@ class CartController extends AppController
     /**
      * Shows checkout page
      *
-     * @return string
      */
-    public function actionCheckout(): string
+    public function actionCheckout()
     {
-        $session = Yii::$app->session;
-        $session->open();
         $this->setMeta('Оформление заказа :: ' . Yii::$app->name);
-        return $this->render('checkout', compact('session'));
+        $session = Yii::$app->session;
+        $order = new Order();
+        $orderProduct = new OrderProduct();
+        if ($order->load(Yii::$app->request->post())) {
+            $order->qty = $session['cart.qty'];
+            $order->sum = $session['cart.sum'];
+            $transaction = Yii::$app->getDb()->beginTransaction();
+
+            try {
+                if (null === $transaction) {
+                    throw new ErrorException('При сохранении заказа не удалось запустить транзакцию');
+                }
+
+                if (!$order->save() || !$orderProduct->saveOrderProduct($session['cart'], $order->id)) {
+                    Yii::$app->session->setFlash('error', 'Ошибка при оформлении заказа');
+                    $errors = '';
+                    define('BR', '</br>');
+
+                    foreach ($order->getErrors() as $error) {
+                        $errors .= implode(BR, $error) . BR;
+                    }
+                    foreach ($orderProduct->getErrors() as $error) {
+                        $errors .= implode(BR, $error) . BR;
+                    }
+
+                    $transaction->rollBack();
+                    throw new ErrorException('Ошибки при оформлении заказа: ' . BR . $errors);
+                }
+
+                $transaction->commit();
+                Yii::$app->session->setFlash('success', 'Ваш заказ принят');
+                $session->remove('cart');
+                $session->remove('cart.qty');
+                $session->remove('cart.sum');
+                return $this->refresh();
+
+            } catch (\Throwable $e) {
+                Yii::$app->session->setFlash('error', $e->getMessage());
+                $transaction->rollBack();
+            }
+        }
+
+        return $this->render('checkout', compact('session', 'order'));
     }
 
     /**
