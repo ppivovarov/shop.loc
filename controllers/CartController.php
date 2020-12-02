@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace app\controllers;
 
 use app\models\{Cart, Order, OrderProduct, Product};
+use Swift_TransportException;
 use Yii;
 use yii\base\ErrorException;
 use yii\web\Response;
@@ -117,6 +118,19 @@ class CartController extends AppController
 
                 $transaction->commit();
                 Yii::$app->session->setFlash('success', 'Ваш заказ принят');
+
+//                try {
+                    Yii::$app->mailer->compose('order', compact('session'))
+                        ->setFrom([Yii::$app->params['senderEmail'] => Yii::$app->params['senderName']])
+                        ->setTo([$order->email, Yii::$app->params['adminEmail']])
+                        ->setSubject('Заказ на сайте')
+                        ->send();
+//                } catch (Swift_TransportException $e) {
+//                    debug($e);
+//                }
+
+
+
                 $session->remove('cart');
                 $session->remove('cart.qty');
                 $session->remove('cart.sum');
