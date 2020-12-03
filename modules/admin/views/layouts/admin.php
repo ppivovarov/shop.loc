@@ -2,9 +2,13 @@
 
 /** @var $content */
 
+/** @var View $this */
+
 use app\assets\AdminAsset;
-use yii\helpers\Html;
-use yii\helpers\Url;
+use app\widgets\Alert;
+use yii\helpers\{Html, Url};
+use yii\web\View;
+use yii\widgets\Breadcrumbs;
 
 AdminAsset::register($this);
 
@@ -78,11 +82,11 @@ AdminAsset::register($this);
         <header class="main-header">
 
             <!-- Logo -->
-            <a href="index2.html" class="logo">
+            <a href="<?php echo Yii::$app->homeUrl ?>" class="logo" target="_blank">
                 <!-- mini logo for sidebar mini 50x50 pixels -->
-                <span class="logo-mini"><b>A</b>LT</span>
+                <span class="logo-mini"><b>A</b> panel</span>
                 <!-- logo for regular state and mobile devices -->
-                <span class="logo-lg"><b>Admin</b>LTE</span>
+                <span class="logo-lg"><b>Admin</b> panel</span>
             </a>
 
             <!-- Header Navbar -->
@@ -212,27 +216,28 @@ AdminAsset::register($this);
                                     </p>
                                 </li>
                                 <!-- Menu Body -->
-<!--                                <li class="user-body">-->
-<!--                                    <div class="row">-->
-<!--                                        <div class="col-xs-4 text-center">-->
-<!--                                            <a href="#">Followers</a>-->
-<!--                                        </div>-->
-<!--                                        <div class="col-xs-4 text-center">-->
-<!--                                            <a href="#">Sales</a>-->
-<!--                                        </div>-->
-<!--                                        <div class="col-xs-4 text-center">-->
-<!--                                            <a href="#">Friends</a>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-                                    <!-- /.row -->
-<!--                                </li>-->
+                                <!--                                <li class="user-body">-->
+                                <!--                                    <div class="row">-->
+                                <!--                                        <div class="col-xs-4 text-center">-->
+                                <!--                                            <a href="#">Followers</a>-->
+                                <!--                                        </div>-->
+                                <!--                                        <div class="col-xs-4 text-center">-->
+                                <!--                                            <a href="#">Sales</a>-->
+                                <!--                                        </div>-->
+                                <!--                                        <div class="col-xs-4 text-center">-->
+                                <!--                                            <a href="#">Friends</a>-->
+                                <!--                                        </div>-->
+                                <!--                                    </div>-->
+                                <!-- /.row -->
+                                <!--                                </li>-->
                                 <!-- Menu Footer-->
                                 <li class="user-footer">
                                     <div class="pull-left">
                                         <a href="#" class="btn btn-default btn-flat">Profile</a>
                                     </div>
                                     <div class="pull-right">
-                                        <a href="<?php echo Url::to(['auth/logout'])?>" class="btn btn-default btn-flat">Sign out</a>
+                                        <a href="<?php echo Url::to(['auth/logout']) ?>"
+                                           class="btn btn-default btn-flat">Sign out</a>
                                     </div>
                                 </li>
                             </ul>
@@ -246,70 +251,20 @@ AdminAsset::register($this);
             </nav>
         </header>
         <!-- Left side column. contains the logo and sidebar -->
-        <aside class="main-sidebar">
-
-            <!-- sidebar: style can be found in sidebar.less -->
-            <section class="sidebar">
-
-                <!-- Sidebar user panel (optional) -->
-                <div class="user-panel">
-                    <div class="pull-left image">
-                        <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-                    </div>
-                    <div class="pull-left info">
-                        <p>Alexander Pierce</p>
-                        <!-- Status -->
-                        <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-                    </div>
-                </div>
-
-                <!-- search form (Optional) -->
-                <form action="#" method="get" class="sidebar-form">
-                    <div class="input-group">
-                        <input type="text" name="q" class="form-control" placeholder="Search...">
-                        <span class="input-group-btn">
-              <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-              </button>
-            </span>
-                    </div>
-                </form>
-                <!-- /.search form -->
-
-                <!-- Sidebar Menu -->
-                <ul class="sidebar-menu" data-widget="tree">
-                    <li class="header">HEADER</li>
-                    <!-- Optionally, you can add icons to the links -->
-                    <li class="active"><a href="#"><i class="fa fa-link"></i> <span>Link</span></a></li>
-                    <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
-                    <li class="treeview">
-                        <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
-                            <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a href="#">Link in level 2</a></li>
-                            <li><a href="#">Link in level 2</a></li>
-                        </ul>
-                    </li>
-                </ul>
-                <!-- /.sidebar-menu -->
-            </section>
-            <!-- /.sidebar -->
-        </aside>
+        <?php echo $this->render('/layouts/inc/sidebar')?>
 
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
             <!-- Content Header (Page header) -->
             <section class="content-header">
                 <h1>
-                    Page Header
-                    <small>Optional description</small>
+                    <?php echo $this->title ?>
                 </h1>
-                <ol class="breadcrumb">
-                    <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-                    <li class="active">Here</li>
-                </ol>
+                <?php echo Breadcrumbs::widget([
+                        'homeLink' => ['label' => 'Admin panel', 'url' => '/admin/'],
+                    'links' => $this->params['breadcrumbs'] ?? [],
+                ]) ?>
+                <?php echo Alert::widget() ?>
             </section>
 
             <!-- Main content -->
