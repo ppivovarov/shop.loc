@@ -1,5 +1,6 @@
 <?php
 
+use app\components\MenuWidget;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -12,9 +13,19 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'parent_id')->textInput() ?>
-
     <?= $form->field($model, 'title')->textInput() ?>
+
+    <div class="form-group field-category-parent_id has-success">
+        <label class="control-label" for="category-parent_id">Родительская категория</label>
+        <select id="category-parent_id" class="form-control" name="Category[parent_id]">
+            <option value="0">Самостоятельная категория</option>
+            <?php echo MenuWidget::widget([
+                'tpl' => 'select',
+                'model' => $model,
+                'cache_time' => 0,
+            ]) ?>
+        </select>
+    </div>
 
     <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
 

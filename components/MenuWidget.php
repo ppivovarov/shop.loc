@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace app\components;
 
 use app\models\Category;
@@ -12,6 +14,8 @@ class MenuWidget extends Widget
     public $data;
     public $tree;
     public $menuHtml;
+    public $model;
+    public $cache_time = 60;
 
     public function init()
     {
@@ -23,7 +27,7 @@ class MenuWidget extends Widget
     public function run()
     {
         //get cache
-        if ($menu = Yii::$app->cache->get('menuHtml')) {
+        if ($this->cache_time && $menu = Yii::$app->cache->get('menuHtml')) {
             return $menu;
         }
 
@@ -35,11 +39,14 @@ class MenuWidget extends Widget
         $this->tree = $this->getTree();
         $this->menuHtml = ('<ul class="' . $this->ul_class . '">' . $this->getMenuHtml($this->tree) . '</ul>');
 
-        Yii::$app->cache->set('menuHtml', $this->menuHtml, 60);
+        //set cache
+        if ($this->cache_time) {
+            Yii::$app->cache->set('menuHtml', $this->menuHtml, $this->cache_time);
+        }
         return $this->menuHtml;
     }
     
-    protected function getTree()
+    protected function getTree(): array
     {
         $tree = [];
         foreach ($this->data as $id => &$datum) {
@@ -53,16 +60,28 @@ class MenuWidget extends Widget
         return $tree;
     }
 
-    protected function getMenuHtml(array $tree)
+    /**
+     * @param array $tree
+     * @param string $tab
+     * @return string
+     */
+    protected function getMenuHtml(array $tree, string $tab = ''): string
     {
         $str = '';
         foreach ($tree as $category) {
-            $str .= $this->catToTemplate($category);
+            $str .= $this->catToTemplate($category, $tab);
         }
         return $str;
     }
 
-    protected function catToTemplate(array $category)
+    /**
+     * Returns rendered template
+     *
+     * @param array $category
+     * @param string $tab
+     * @return string
+     */
+    protected function catToTemplate(array $category, $tab): string
     {
         ob_start();
         include __DIR__ . '/menu_tpl/' . $this->tpl;

@@ -31,13 +31,13 @@ $this->params['breadcrumbs'][] = $this->title;
 
                             'id',
 //                            'parent_id',
-                            [
-                                'attribute' => 'parent_id',
-                                'value' => function($data) {
-//                        debug($data->category);
-                                    return $data->category->title ?? 'Самостоятельная категория';
-                                }
-                            ],
+//                            [
+//                                'attribute' => 'parent_id',
+//                                'value' => function($data) {
+////                        debug($data->category);
+//                                    return $data->category->title ?? 'Самостоятельная категория';
+//                                }
+//                            ],
                             'title',
 //                            'description:ntext',
 //                            'keywords',
