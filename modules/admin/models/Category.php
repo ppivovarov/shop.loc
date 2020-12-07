@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace app\modules\admin\models;
 
@@ -18,7 +19,7 @@ class Category extends ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'category';
     }
@@ -26,7 +27,7 @@ class Category extends ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['parent_id'], 'default', 'value' => null],
@@ -38,7 +39,7 @@ class Category extends ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'id' => 'ID',
@@ -49,6 +50,9 @@ class Category extends ActiveRecord
         ];
     }
 
+    /**
+     * @return ActiveQuery
+     */
     public function getCategory(): ActiveQuery
     {
 //        return $this->hasOne(__CLASS__, ['id' => 'category_id']);

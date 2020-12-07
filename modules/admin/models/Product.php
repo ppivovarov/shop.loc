@@ -1,8 +1,9 @@
 <?php
+declare(strict_types=1);
 
 namespace app\modules\admin\models;
 
-use Yii;
+use yii\db\{ActiveQuery, ActiveRecord};
 
 /**
  * This is the model class for table "product".
@@ -20,12 +21,12 @@ use Yii;
  *
  * @property OrderProduct[] $orderProducts
  */
-class Product extends \yii\db\ActiveRecord
+class Product extends ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'product';
     }
@@ -33,7 +34,7 @@ class Product extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['category_id', 'is_offer'], 'default', 'value' => null],
@@ -46,7 +47,7 @@ class Product extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'id' => 'ID',
@@ -60,6 +61,15 @@ class Product extends \yii\db\ActiveRecord
             'img' => 'Img',
             'is_offer' => 'Is Offer',
         ];
+    }
+
+    /**
+     *
+     * @return ActiveQuery
+     */
+    public function getCategory(): ActiveQuery
+    {
+        return $this->hasOne(Category::class, ['id' => 'category_id']);
     }
 
 //    /**

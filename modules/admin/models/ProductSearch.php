@@ -6,9 +6,9 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 /**
- * CategorySearch represents the model behind the search form of `app\modules\admin\models\Category`.
+ * ProductSearch represents the model behind the search form of `app\modules\admin\models\Product`.
  */
-class CategorySearch extends Category
+class ProductSearch extends Product
 {
     /**
      * {@inheritdoc}
@@ -16,8 +16,9 @@ class CategorySearch extends Category
     public function rules(): array
     {
         return [
-            [['id', 'parent_id'], 'integer'],
-            [['title', 'description', 'keywords'], 'safe'],
+            [['id', 'category_id', 'is_offer'], 'integer'],
+            [['title', 'content', 'description', 'keywords', 'img'], 'safe'],
+            [['price', 'old_price'], 'number'],
         ];
     }
 
@@ -39,7 +40,7 @@ class CategorySearch extends Category
      */
     public function search($params): ActiveDataProvider
     {
-        $query = Category::find()->with('category');
+        $query = Product::find()->with('category');
 
         // add conditions that should always apply here
 
@@ -58,12 +59,17 @@ class CategorySearch extends Category
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'parent_id' => $this->parent_id,
+            'category_id' => $this->category_id,
+            'price' => $this->price,
+            'old_price' => $this->old_price,
+            'is_offer' => $this->is_offer,
         ]);
 
         $query->andFilterWhere(['ilike', 'title', $this->title])
+            ->andFilterWhere(['ilike', 'content', $this->content])
             ->andFilterWhere(['ilike', 'description', $this->description])
-            ->andFilterWhere(['ilike', 'keywords', $this->keywords]);
+            ->andFilterWhere(['ilike', 'keywords', $this->keywords])
+            ->andFilterWhere(['ilike', 'img', $this->img]);
 
         return $dataProvider;
     }

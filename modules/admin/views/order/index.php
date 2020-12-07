@@ -1,10 +1,11 @@
 <?php
 
-use yii\helpers\Html;
-use yii\grid\GridView;
-
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
+
+use yii\grid\{SerialColumn, ActionColumn};
+use yii\helpers\Html;
+use yii\grid\GridView;
 
 $this->title = 'Список заказов';
 $this->params['breadcrumbs'][] = $this->title;
@@ -21,7 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?= GridView::widget([
                         'dataProvider' => $dataProvider,
                         'columns' => [
-                            ['class' => 'yii\grid\SerialColumn'],
+                            ['class' => SerialColumn::class],
                             'id',
                             [
                                 'attribute' => 'created_at',
@@ -50,7 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             //'address',
                             //'note:ntext',
                             [
-                                'class' => 'yii\grid\ActionColumn',
+                                'class' => ActionColumn::class,
                                 'header' => 'Действия',
                             ],
                         ],
