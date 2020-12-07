@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace app\modules\admin\models;
 
+use yii\db\ActiveQuery;
+
 /**
  * This is the model class for table "order_product".
  *
@@ -62,9 +64,9 @@ class OrderProduct extends \yii\db\ActiveRecord
     /**
      * Gets query for [[Order]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getOrder()
+    public function getOrder(): ActiveQuery
     {
         return $this->hasOne(Order::class, ['id' => 'order_id']);
     }
@@ -72,9 +74,9 @@ class OrderProduct extends \yii\db\ActiveRecord
     /**
      * Gets query for [[Product]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getProduct()
+    public function getProduct(): ActiveQuery
     {
         return $this->hasOne(Product::class, ['id' => 'product_id']);
     }

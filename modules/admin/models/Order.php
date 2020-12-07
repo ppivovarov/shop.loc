@@ -3,7 +3,7 @@
 namespace app\modules\admin\models;
 
 use yii\behaviors\TimestampBehavior;
-use yii\db\{ActiveRecord, Expression};
+use yii\db\{ActiveQuery, ActiveRecord, Expression};
 
 /**
  * This is the model class for table "orders".
@@ -83,13 +83,13 @@ class Order extends ActiveRecord
         ];
     }
 
-//    /**
-//     * Gets query for [[OrderProducts]].
-//     *
-//     * @return ActiveQuery
-//     */
-//    public function getOrderProducts()
-//    {
-//        return $this->hasMany(OrderProduct::className(), ['order_id' => 'id']);
-//    }
+    /**
+     * Gets query for [[OrderProducts]].
+     *
+     * @return ActiveQuery
+     */
+    public function getOrderProducts(): ActiveQuery
+    {
+        return $this->hasMany(OrderProduct::class, ['order_id' => 'id']);
+    }
 }

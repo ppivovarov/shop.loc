@@ -1,46 +1,91 @@
 <?php
 
 use yii\helpers\Html;
+use yii\web\YiiAsset;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model app\modules\admin\models\Order */
 
-$this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Orders', 'url' => ['index']];
+$this->title = 'Заказ № ' . $model->id;
+$this->params['breadcrumbs'][] = ['label' => 'Заказы', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-\yii\web\YiiAsset::register($this);
+YiiAsset::register($this);
 ?>
-<div class="order-view">
+<div class="row">
+    <div class="col-md-12">
+        <div class="box">
+            <div class="box-header with-border">
+                <?= Html::a('Изменить', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+                <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
+                    'class' => 'btn btn-danger',
+                    'data' => [
+                        'confirm' => 'Вы уверены что хотите удалить заказ?',
+                        'method' => 'post',
+                    ],
+                ]) ?>
+            </div>
+            <div class="box-body">
+                <div class="order-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+                    <?= DetailView::widget([
+                        'model' => $model,
+                        'attributes' => [
+                            'id',
+                            'created_at:datetime',
+                            'updated_at:datetime',
+                            'qty',
+                            'sum',
+                            [
+                                'attribute' => 'status',
+                                'value' => $model->status
+                                    ? '<span class="text-green">Готов</span>'
+                                    : '<span class="text-danger">Новый</span>',
+                                'format' => 'raw',
+                            ],
+//                            'status',
+                            'name',
+                            'email',
+                            'phone',
+                            'address',
+                            'note:ntext',
+                        ],
+                    ]) ?>
 
-    <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'created_at',
-            'updated_at',
-            'qty',
-            'sum',
-            'status',
-            'name',
-            'email:email',
-            'phone',
-            'address',
-            'note:ntext',
-        ],
-    ]) ?>
-
+<div class="row">
+    <div class="col-md-12">
+        <div class="box">
+            <div class="box-header with-border">
+                <h3 class="box-title">Товары в заказе</h3>
+            </div>
+            <div class="box-body">
+                <table class="table table-bordered">
+                    <tbody>
+                    <tr>
+                        <th>ID</th>
+                        <th>Наименование</th>
+                        <th>Кол-во</th>
+                        <th>Цена</th>
+                        <th>Сумма</th>
+                    </tr>
+                    <?php foreach ($items = $model->orderProducts as $product) : ?>
+                        <tr>
+                            <td><?php echo $product->id ?></td>
+                            <td><?php echo $product->title ?></td>
+                            <td><?php echo $product->qty ?></td>
+                            <td><?php echo $product->price ?></td>
+                            <td><?php echo $product->total ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>

@@ -22,24 +22,33 @@ $this->params['breadcrumbs'][] = $this->title;
                         'dataProvider' => $dataProvider,
                         'columns' => [
                             ['class' => 'yii\grid\SerialColumn'],
-
                             'id',
                             [
                                 'attribute' => 'created_at',
-//                                'format' => 'datetime'
                                 'format' => ['datetime', 'php:d M Y H:i:s'],
 //                                'format' => 'date'
+//                                'format' => 'datetime'
                             ],
                             'updated_at',
                             'qty',
                             'sum',
                             'status',
+                            [
+                                'attribute' => 'status',
+                                'value' => static function ($data) {
+                                    return $data->status
+                                        ? '<span class="text-green">Готов</span>'
+                                        : '<span class="text-danger">Новый</span>';
+                                },
+//                                'value' => static fn($data) => $data->status ?
+//                                    '<span class="text-green">Готов</span>' : '<span class="text-danger">Новый</span>',
+                                'format' => 'raw',
+                            ],
                             //'name',
                             //'email:email',
                             //'phone',
                             //'address',
                             //'note:ntext',
-
                             [
                                 'class' => 'yii\grid\ActionColumn',
                                 'header' => 'Действия',
