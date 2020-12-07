@@ -40,13 +40,13 @@ class OrderController extends AppAdminController
         $dataProvider = new ActiveDataProvider([
             'query' => Order::find(),
             'pagination' => [
-                'pageSize' => 10
+                'pageSize' => 10,
             ],
             'sort' => [
                 'defaultOrder' => [
-                    'id' => SORT_DESC
-                ]
-            ]
+                    'id' => SORT_DESC,
+                ],
+            ],
         ]);
 
         return $this->render('index', [
@@ -97,6 +97,7 @@ class OrderController extends AppAdminController
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success', 'Заказ обновлен');
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -116,7 +117,15 @@ class OrderController extends AppAdminController
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        //without db external key 1
+//        $this->findModel($id)->unlinkAll('orderProduct', true);
+
+        if ($this->findModel($id)->delete()) {
+            Yii::$app->session->setFlash('success', 'Заказ №' . $id . ' успешно удален');
+        }
+
+        //without db external key 2
+//        OrderProduct::deleteAll(['order_id' => $id]);
 
         return $this->redirect(['index']);
     }
