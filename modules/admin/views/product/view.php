@@ -42,7 +42,7 @@ YiiAsset::register($this);
 
                             ],
                             'title',
-                            'content',
+                            'content:raw',
                             'price',
                             'old_price',
                             'description:ntext',
