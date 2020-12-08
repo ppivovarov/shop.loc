@@ -42,7 +42,7 @@ use yii\helpers\{Html, Url};
             <h5><?php $product->title ?></h5>
             <div class="col-md-4 agileinfo_single_left">
                 <?php echo Html::img(
-                    '@web/products/' . $product->img,
+                    '@web/products/' . ($product->img ?: 'no-image.png'),
                     ['title' => $product->title, 'id' => 'example']
                 ) ?>
             </div>

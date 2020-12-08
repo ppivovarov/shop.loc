@@ -50,7 +50,7 @@ YiiAsset::register($this);
 //                            'img',
                             [
                                 'attribute' => 'img',
-                                'value' => '/products/' . $model->img,
+                                'value' => '/products/' . ($model->img ?: 'no-image.png'),
                                 'format' => ['image', ['width' => '50px']],
                             ],
 //                            'is_offer',
