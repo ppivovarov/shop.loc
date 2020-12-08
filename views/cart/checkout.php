@@ -56,7 +56,7 @@ use yii\widgets\ActiveForm;
                                     <td class="invert"> <?php echo $i ?></td>
                                     <td class="invert-image">
                                         <a href="<?php echo Url::to(['product/view', 'id' => $id]) ?>">
-                                            <?php echo Html::img('@web/products/' . ($item['img'] ?: 'no-image.png'), [
+                                            <?php echo Html::img('@web/' . $item['img'], [
                                                 'class' => 'img-responsive',
                                                 'alt' => $item['title'],
                                             ]) ?>

@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace app\modules\admin\models;
 
 use yii\db\{ActiveQuery, ActiveRecord};
+use Yii;
+use yii\web\UploadedFile;
 
 /**
  * This is the model class for table "product".
@@ -23,6 +25,9 @@ use yii\db\{ActiveQuery, ActiveRecord};
  */
 class Product extends ActiveRecord
 {
+
+    public $file;
+
     /**
      * {@inheritdoc}
      */
@@ -37,10 +42,14 @@ class Product extends ActiveRecord
     public function rules(): array
     {
         return [
+            [['category_id', 'title', 'content'], 'required'],
             [['category_id', 'is_offer'], 'default', 'value' => null],
             [['category_id', 'is_offer'], 'integer'],
             [['title', 'content', 'description', 'keywords', 'img'], 'string'],
             [['price', 'old_price'], 'number'],
+            [['price', 'old_price'], 'default', 'value' => 0],
+            [['img'], 'default', 'value' => 'products/no-image.png']
+//            [['file'], 'image']
         ];
     }
 
@@ -59,6 +68,7 @@ class Product extends ActiveRecord
             'description' => 'Description',
             'keywords' => 'Keywords',
             'img' => 'Img',
+            'file' => 'Photo',
             'is_offer' => 'Is Offer',
         ];
     }
@@ -70,6 +80,20 @@ class Product extends ActiveRecord
     public function getCategory(): ActiveQuery
     {
         return $this->hasOne(Category::class, ['id' => 'category_id']);
+    }
+
+    public function beforeSave($insert)
+    {
+        if ($file = UploadedFile::getInstance($this, 'file')) {
+            $dir = 'products/' . date('Y-m-d') . '/';
+            if (!is_dir($dir)) {
+                mkdir($dir);
+            }
+            $fileName = uniqid() . '_' . $file->baseName . '.' . $file->extension;
+            $this->img = $dir . $fileName;
+            $file->saveAs($this->img);
+        }
+        return parent::beforeSave($insert);
     }
 
 //    /**

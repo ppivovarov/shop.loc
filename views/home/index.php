@@ -99,7 +99,7 @@ use yii\helpers\{Html, Url};
                                         <div class="snipcart-item block">
                                             <div class="snipcart-thumb">
                                                 <a href="<?php echo Url::to(['product/view', 'id' => $offer->id]) ?>">
-                                                    <?php echo Html::img('@web/products/' . $offer->img, ['alt' => $offer->title]) ?>
+                                                    <?php echo Html::img('@web/' . $offer->img, ['alt' => $offer->title]) ?>
                                                 </a>
                                                 <!--                                                <a href="single.html"><img title=" " alt=" " src="images/1.png"/></a>-->
                                                 <p><?php echo $offer->title ?></p>

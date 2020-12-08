@@ -101,7 +101,7 @@ use yii\widgets\LinkPager;
                                                 <div class="snipcart-thumb">
                                                     <a href="<?php echo Url::to(['product/view', 'id' => $product->id]) ?>">
                                                         <?php echo Html::img(
-                                                            '@web/products/' . ($product->img ?: 'no-image.png'),
+                                                            '@web/' . $product->img,
                                                             ['alt' => $product->title]
                                                         ) ?>
                                                     </a>

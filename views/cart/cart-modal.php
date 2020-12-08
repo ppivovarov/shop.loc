@@ -20,7 +20,7 @@ if (!empty($cart = $session['cart'])): ?>
             <?php foreach ($cart as $id => $product) : ?>
                 <tr>
                     <td>
-                        <?php echo Html::img('@web/products/' . ($product['img'] ?: 'no-image.png'), ['alt' => $product['title'],]) ?>
+                        <?php echo Html::img('@web/' . $product['img'], ['alt' => $product['title'],]) ?>
                     </td>
                     <td><?php echo $product['title'] ?></td>
                     <td><?php echo $product['qty'] ?></td>
